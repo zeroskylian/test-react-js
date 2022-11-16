@@ -22,3 +22,19 @@ export default class TestCC extends React.Component {
     );
   }
 }
+
+export function Man(props) {
+  return (
+    <div>
+      姓名{props.name} === {props.age}
+    </div>
+  );
+}
+Man.propTypes = {
+  name: PropTypes.string.isRequired,
+  age: PropTypes.number,
+};
+
+Man.defaultProps = {
+  age: 3,
+};
