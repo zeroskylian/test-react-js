@@ -4,14 +4,13 @@ import { Link } from 'react-router-dom'
 
 import styles from './Navbar.module.css'
 
-import { selectAllPosts, reloadAllPosts } from '../features/posts/postsSlice'
+import { reloadAllPosts } from '../features/posts/postsSlice'
 import {
   fetchNotifications,
   selectAllNotifications,
 } from '../features/notifications/notificationsSlice'
 
 export const Navbar = () => {
-  const totalPosts = useSelector((state) => selectAllPosts(state).length)
   const notifications = useSelector(selectAllNotifications)
   const numUnreadNotifications = notifications.filter((n) => !n.read).length
   const dispatch = useDispatch()
@@ -36,7 +35,6 @@ export const Navbar = () => {
     <nav>
       <section>
         <h1>Redux Quick Start Example</h1>
-
         <div className={styles.navContent}>
           <div className={styles.navLinks}>
             <Link to="/">Posts</Link>

@@ -1,51 +1,51 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { unwrapResult } from '@reduxjs/toolkit'
-import { postAdded, addNewPost } from './postsSlice'
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { postAdded, addNewPost } from './postsSlice';
 
-import { selectAllUsers } from '../users/usersSlice'
+import { selectAllUsers } from '../users/usersSlice';
 
 export const AddPostForm = () => {
-  const [addRequestStatus, setAddRequestStatus] = useState('idle')
-  const dispatch = useDispatch()
+  const [addRequestStatus, setAddRequestStatus] = useState('idle');
+  const dispatch = useDispatch();
 
-  const users = useSelector(selectAllUsers)
+  const users = useSelector(selectAllUsers);
 
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
-  const [userId, setUserId] = useState('')
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [userId, setUserId] = useState('');
 
-  const onTitleChanged = (e) => setTitle(e.target.value)
-  const onContentChanged = (e) => setContent(e.target.value)
-  const onAuthorChanged = (e) => setUserId(e.target.value)
+  const onTitleChanged = (e) => setTitle(e.target.value);
+  const onContentChanged = (e) => setContent(e.target.value);
+  const onAuthorChanged = (e) => setUserId(e.target.value);
 
   const onSavePostClicked = async () => {
     if (title && content) {
       try {
-        setAddRequestStatus('pending')
+        setAddRequestStatus('pending');
         const resultAction = await dispatch(
           addNewPost({ title, content, user: userId })
-        )
-        unwrapResult(resultAction)
-        setTitle('')
-        setContent('')
-        setUserId('')
+        );
+        unwrapResult(resultAction);
+        setTitle('');
+        setContent('');
+        setUserId('');
       } catch (err) {
-        console.error('Failed to save the post: ', err)
+        console.error('Failed to save the post: ', err);
       } finally {
-        setAddRequestStatus('idle')
+        setAddRequestStatus('idle');
       }
     }
-  }
+  };
 
   const canSave =
-    [title, content, userId].every(Boolean) && addRequestStatus === 'idle'
+    [title, content, userId].every(Boolean) && addRequestStatus === 'idle';
 
   const usersOptions = users.map((user) => (
     <option key={user.id} value={user.id}>
       {user.name}
     </option>
-  ))
+  ));
 
   return (
     <section>
@@ -77,5 +77,5 @@ export const AddPostForm = () => {
         Save Post
       </button>
     </section>
-  )
-}
+  );
+};
